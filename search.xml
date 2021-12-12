@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>hexo+GitHub搭建博客</title>
+      <link href="/2021/12/12/hexo-da-jian-bo-ke/"/>
+      <url>/2021/12/12/hexo-da-jian-bo-ke/</url>
+      
+        <content type="html"><![CDATA[<h1 id="Hexo-GitHub搭建个人博客网站"><a href="#Hexo-GitHub搭建个人博客网站" class="headerlink" title="Hexo+GitHub搭建个人博客网站"></a>Hexo+GitHub搭建个人博客网站</h1><h5 id="建立博客的原因："><a href="#建立博客的原因：" class="headerlink" title="建立博客的原因："></a>建立博客的原因：</h5><ul><li>分享技术</li><li>输出倒逼知识输入（费曼学习法）</li><li>作为收藏夹（经常想记录一下东西但是七零八落）</li></ul><h6 id="不确定博客能写多久，可能会很久不更新，但是三分钟热度有三分钟收获嘛"><a href="#不确定博客能写多久，可能会很久不更新，但是三分钟热度有三分钟收获嘛" class="headerlink" title="不确定博客能写多久，可能会很久不更新，但是三分钟热度有三分钟收获嘛"></a>不确定博客能写多久，可能会很久不更新，但是三分钟热度有三分钟收获嘛</h6><h3 id="搭建过程："><a href="#搭建过程：" class="headerlink" title="搭建过程："></a>搭建过程：</h3><h4 id="准备工作："><a href="#准备工作：" class="headerlink" title="准备工作："></a>准备工作：</h4><ul><li>下载<a href="https://nodejs.org/en/">Node.js (nodejs.org)</a>(Node.js 版本需不低于 10.13，建议使用 Node.js 12.0 及以上版本)<ul><li>在cmd中输入 <code>node -v</code>可查看node版本</li></ul></li><li>安装Git</li><li>准备github账号</li></ul><h4 id="安装Hexo："><a href="#安装Hexo：" class="headerlink" title="安装Hexo："></a>安装Hexo：</h4><ul><li>首先创建一个放置博客的文件夹，进入文件夹，右键Git Bash Here，输入下面的指令，添加国内镜像源,加快下载插件速度</li></ul><pre class=" language-bash"><code class="language-bash">$ <span class="token function">npm</span> config <span class="token keyword">set</span> registry https://registry.npm.taobao.org</code></pre><ul><li>使用npm安装Hexo</li></ul><pre class=" language-bash"><code class="language-bash">$ <span class="token function">npm</span>  <span class="token function">install</span> -g hexo-cli//输入hexo -v 可查看是否安装成功</code></pre><ul><li>初始化Hexo</li></ul><pre class=" language-bash"><code class="language-bash">$ hexo init</code></pre><ul><li>Hexo初始化后 ，有以下几个文件/文件夹。<ul><li>  <code>scaffolds：</code>生成文章的一些模板</li><li><code>source：</code>用来存放你的文章</li><li><code>themes：</code>主题</li><li>.<code>gitignore </code>Git忽略文件夹</li><li><code>_config.yml:</code> 博客的配置文件</li><li><code>package.json</code> 所需模块</li><li><code>node_modules:</code> 依赖包</li><li><code>package-lock.json</code> 记录了模块下载地址</li></ul></li><li>安装依赖：</li></ul><pre class=" language-bash"><code class="language-bash">$ <span class="token function">npm</span> intall </code></pre><ul><li><p>生成页面文件：</p><pre class=" language-bash"><code class="language-bash">$ hexo generate      <span class="token comment" spellcheck="true">#或者简写hexo g</span></code></pre></li><li><p>本地预览：</p><pre class=" language-bash"><code class="language-bash">$ hexo server        <span class="token comment" spellcheck="true">#或者简写hexo s</span></code></pre><p>打开浏览器，输入<code>127.0.0.1:4000</code> 即可预览本地效果</p></li></ul><p>至此Hexo已经安装完毕，可<code>hexo new newname</code>新建文章(默认post布局)</p><h4 id="部署到github"><a href="#部署到github" class="headerlink" title="部署到github"></a>部署到github</h4><ul><li><p>创建仓库:</p><p>需要 注意的是，仓库名有要求,要创建一个和你用户名相同的仓库，后面加<code>github.io</code>，只有这样，将来要部署到GitHub page的时候，才会被识别， id为Ring0814，那么我的仓库名必须为Ring0814.github.io</p></li><li><p>生成SSH密钥</p><p>博客文件夹根目录下，右键Git Bash Here，输入</p><pre class=" language-bash"><code class="language-bash">$ <span class="token function">git</span>  config --global  user.name    <span class="token string">"githubid"</span>$ <span class="token function">git</span>  config --global  user.email     <span class="token string">"email"</span></code></pre><p>这里<code>id</code>和<code>email</code>换成你自己的信息，然后生成<code>ssh</code>密钥</p><pre class=" language-bash"><code class="language-bash">$ ssh-keygen  -t rsa -C <span class="token string">"email"</span>$ <span class="token function">cat</span>  ~/.ssh/id_rsa.pub</code></pre><p>将输入的内容复制，打开Github右上角的Settings,找到<code>SSH and GPG keys</code>，然后新建一个<code>key</code>，<code>key</code>的名字随意填一个，内容即刚复制的内容。</p><p><img src="hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2.assets/image-20211212183118279.png" alt="image-20211212183118279"></p></li><li><p>部署：</p></li><li><p>安装deploy-git 插件</p><pre class=" language-bash"><code class="language-bash">$ <span class="token function">npm</span> <span class="token function">install</span> hexo-deployer-git --save</code></pre></li><li><p>修改_config.yaml文件最后几行</p><pre class=" language-yml"><code class="language-yml">   deploy:     type: git     repository: https://github.com/axh2018/axh2018.github.io     branch: master</code></pre></li><li><p>部署到Github</p><pre class=" language-bash"><code class="language-bash">   $ hexo clean        <span class="token comment" spellcheck="true">#删除原来生成的pubic文件夹</span>   $ hexo g            <span class="token comment" spellcheck="true">#生成新的页面</span>   $ hexo d            <span class="token comment" spellcheck="true">#部署到GitHub</span></code></pre></li></ul><p> 部署成功后可以通过 <a href="https://userid.github.io访问/">https://userid.github.io访问</a></p><h4 id="主题更换"><a href="#主题更换" class="headerlink" title="主题更换"></a>主题更换</h4><p>​        相信Hexo默认的主题并不是大多数人喜欢的，所有我们可以更改为自己喜欢的主题，Hexo官网为我们提供了非常多的主题选择，也可以选择网上其他主题。</p><p>[^先更到这吧]: </p><h6 id="Front-matter-是文件最上方以-分隔的区域（写键值对时注意中间空格）"><a href="#Front-matter-是文件最上方以-分隔的区域（写键值对时注意中间空格）" class="headerlink" title="Front-matter 是文件最上方以 --- 分隔的区域（写键值对时注意中间空格）"></a>Front-matter 是文件最上方以 <code>---</code> 分隔的区域（写键值对时注意中间空格）</h6>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title></title>
       <link href="/2021/12/12/my-new-post/"/>
       <url>/2021/12/12/my-new-post/</url>
